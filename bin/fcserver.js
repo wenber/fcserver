@@ -11,17 +11,18 @@ var program = require('commander');
 
 program
     .version('0.0.0')
-    .option('-p, --port', 'set the listen port');
+    .option('-p, --port', 'set the listen port')
+    .option('-o, --open', 'open in browser');
 
 program
     .command('start')
     .action(function (port) {
-        var server = require('../lib/server')
-        if (program.port) {
-            server.start(port);
-        }
-        else {
-            server.start();
+        port = typeof port === 'number' ? port : require('../lib/config').defaultPort;
+        var server = require('../lib/server');
+
+        server.start(port);
+        if (program.open) {
+            require('../lib/util').openInBrowser('http://localhost:' + port);
         }
     });
 
