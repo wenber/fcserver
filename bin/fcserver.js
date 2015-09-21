@@ -22,7 +22,7 @@ program
 
         server.start(port);
         if (program.open) {
-            require('../lib/util').openInBrowser('http://localhost:' + port);
+            require('../lib/util/util').openInBrowser('http://localhost:' + port);
         }
     });
 
