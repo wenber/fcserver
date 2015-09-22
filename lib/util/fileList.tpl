@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>Directory List</title>
-    <link rel="SHORTCUT ICON" href="http://www.baidu.com/favicon.ico">
     <style type="text/css">
     /*!
     * Bootstrap v2.3.2
