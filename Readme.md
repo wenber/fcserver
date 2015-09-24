@@ -7,7 +7,7 @@ npm install -g fcserver
 ```
 
 ### 使用
-+ 启动方法
++ 启动方法，在项目根目录下
 ```
 fcserver start [-o] [-p 8000]   // -o 表示同时打开默认浏览器 -p 指定端口
 ```
@@ -15,4 +15,42 @@ fcserver start [-o] [-p 8000]   // -o 表示同时打开默认浏览器 -p 指�
 ### 功能
 + 支持文件目录索引
 + 支持less文件使用
++ 支持本地mock数据
 + 正在扩展各种资源的处理器...
+
+### 已经拥有的处理器模块
+
+* less 处理less文件，直接将less语法的文件转换成css格式后返回到客户端
+* mock 本地响应请求的mock数据，可以动态生成一些列数据供客户端使用，使得前端开发不再依赖后端接口
+
+
+### 关于使用本地mock数据服务的说明
+
+在项目根目录下添加fcserver-config.js配置文件，文件内容如下
+
+```
+exports.path2Handler = [
+    { 
+        // 对less文件的请求，交由less处理器模块
+        path: /.+\.less($|\?)/, // path配置特定的路径
+        handler: [ // handler是该路径下请求对应的处理器模块名称
+            'less'
+        ]
+    },
+    {   
+        // 对以.ajax标示的异步请求，交由mock处理器模块
+        path: /.+\.ajax($|\?)/,
+        handler: [
+            'mock'
+        ]
+    }
+];
+
+// mockPath是mock文件的顶级文件夹，默认是项目根目录下的mock文件夹，你也可以配置成其他目录作为mock顶级目录,例如，当ajax的请求url为/path/to/file时，前端会返回如下路径里的文件返回值
+   root
+        ----mock
+            ----path
+                ----to
+                    ----file.js
+exports.mockPath = './mock';
+```
