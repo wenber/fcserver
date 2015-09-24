@@ -1,6 +1,6 @@
 {
   "name": "fcserver",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "node版精简服务器",
   "main": "./bin/fcserver.js",
   "bin": {
@@ -28,6 +28,7 @@
     "commander": "^2.8.1",
     "connect": "^3.4.0",
     "less": "^2.5.1",
+    "mockservice": "^0.1.14",
     "morgan": "^1.6.1",
     "promise": "^7.0.4",
     "underscore": "^1.8.3"
