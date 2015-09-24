@@ -1,15 +1,11 @@
 exports.path2Handler = [
     { 
         path: /.+\.less($|\?)/,
-        handler: [
-            'less'
-        ]
+        handler: 'less'
     },
     {
         path: /.+\.ajax($|\?)/,
-        handler: [
-            'mock'
-        ]
+        handler: 'mock'
     }
 ];
 

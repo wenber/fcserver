@@ -33,16 +33,13 @@ exports.path2Handler = [
     { 
         // 对less文件的请求，交由less处理器模块
         path: /.+\.less($|\?)/, // path配置特定的路径
-        handler: [ // handler是该路径下请求对应的处理器模块名称
-            'less'
-        ]
+        handler:  'less' // handler是该路径下请求对应的处理器模块名称
+           
     },
     {   
         // 对以.ajax标示的异步请求，交由mock处理器模块
         path: /.+\.ajax($|\?)/,
-        handler: [
-            'mock'
-        ]
+        handler: 'mock'
     }
 ];
 
