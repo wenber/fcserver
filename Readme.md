@@ -16,6 +16,8 @@ fcserver start [-o] [-p 8000]   // -o 表示同时打开默认浏览器 -p 指�
 + 支持文件目录索引
 + 支持less文件使用
 + 支持本地mock数据
++ 支持es6文件自动转换成es5（要求预先安装全局安装babel模块）
++ 支持自定义处理器
 + 正在扩展各种资源的处理器...
 
 ### 已经拥有的处理器模块
@@ -40,6 +42,14 @@ exports.path2Handler = [
         // 对以.ajax标示的异步请求，交由mock处理器模块
         path: /.+\.ajax($|\?)/,
         handler: 'mock'
+    },
+    {
+        path: /._es6\.js?($|\?)/, // 为了标示es6文件，所有es6类型文件都以*_es6.js结尾
+        handler: 'es6to5'
+    },
+    {
+        path: /._es6\.js?($|\?)/, // 为了标示es6文件，所有es6类型文件都以*_es6.js结尾
+        handler: addCookie  // 自定义处理器以函数名表示，该函数要求在配置文件中可以访问
     }
 ];
 
