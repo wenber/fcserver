@@ -1,5 +1,5 @@
 exports.path2Handler = [
-    { 
+    {
         path: /.+\.less($|\?)/,
         handler: 'less'
     },
