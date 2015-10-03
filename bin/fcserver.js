@@ -8,6 +8,7 @@
 'use strict';
 
 var program = require('commander');
+var defaultPort = require('../lib/config').defaultPort;
 
 program
     .version('0.0.0')
@@ -17,9 +18,8 @@ program
 program
     .command('start')
     .action(function (port) {
-        port = typeof port === 'number' ? port : require('../lib/config').defaultPort;
+        port = port || defaultPort;
         var server = require('../lib/server');
-
         server.start(port);
         if (program.open) {
             require('../lib/util/util').openInBrowser('http://localhost:' + port);
