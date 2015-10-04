@@ -18,11 +18,11 @@ program
 program
     .command('start')
     .action(function (port) {
-        port = port || defaultPort;
+        var fixPort = program.port ? port : defaultPort;
         var server = require('../lib/server');
-        server.start(port);
+        server.start(fixPort);
         if (program.open) {
-            require('../lib/util/util').openInBrowser('http://localhost:' + port);
+            require('../lib/util/util').openInBrowser('http://localhost:' + fixPort);
         }
     });
 
