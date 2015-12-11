@@ -20,7 +20,7 @@ program
     .action(function (port) {
         var fixPort = program.port ? port : defaultPort;
         var server = require('../lib/server');
-        server.start(fixPort);
+        server(fixPort);
         if (program.open) {
             require('../lib/util/util').openInBrowser('http://localhost:' + fixPort);
         }
