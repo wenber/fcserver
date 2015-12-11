@@ -10,6 +10,7 @@ npm install -g fcserver
 + 启动方法，在项目根目录下
 ```
 fcserver start [-o] [-p 8000]   // -o 表示同时打开默认浏览器 -p 指定端口
+fcserver-master  // 通过守护进程启动，跌机时会自动重启  但是只能使用默认的8080端口
 ```
 
 ### 功能
