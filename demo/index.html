@@ -2,7 +2,6 @@
 <html>
   <head>
     <link rel="stylesheet" href="./test.less" />
-    <script src="./test_es6.js"></script>
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
   </head>
   <body>
@@ -15,7 +14,7 @@
           data: {param1: 'value1', 'param2': 'value2'}
       })
       .done(function(data) {
-         document.getElementById('a').innerHTM = data;
+         document.getElementById('a').innerText = 223;
       })
       .fail(function(e) {
           console.log('fail');
