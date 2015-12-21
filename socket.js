@@ -14,20 +14,24 @@ if (window.WebSocket) {
         };
         websocket.onmessage = function (evt) {
             //收到服务器消息，使用evt.data提取
-            console.clear();
             var data = JSON.parse(evt.data);
-            var stdoutArr = data.stdout.split('\n');
-            stdoutArr.forEach(function (item) {
-                if (/^(\+)\s.*$/.test(item)) {
-                    console.log('%c' + item, 'color: green');
-                }
-                else if (/^(\-)\s.*$/.test(item)) {
-                    console.log('%c' + item, 'color: red');
-                }
-                else {
-                    console.log(item);
-                }
-            });
+            if (data.stdout) {
+                console.clear();
+                console.log('%c**********start***************\n', 'color: blue');
+                var stdoutArr = data.stdout.split('\n');
+                stdoutArr.forEach(function (item) {
+                    if (/^(\+)\s.*$/.test(item)) {
+                        console.log('%c' + item, 'color: green');
+                    }
+                    else if (/^(\-)\s.*$/.test(item)) {
+                        console.log('%c' + item, 'color: red');
+                    }
+                    else {
+                        console.log(item);
+                    }
+                });
+                console.log('%c***********end**************\n', 'color: blue');
+            }
         };
     }
     catch (err) {
