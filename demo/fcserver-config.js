@@ -16,7 +16,7 @@ exports.path2Handler = [
 // 默认是服务启动目录下的mock文件夹，这里也支持自定义的mock目录
 exports.mockPath = './mock';
 
-// 是否启动socket调试
+// 是否启动socket调试, 如果启动，请使用默认的端口8080
 exports.initSocket = true;
 
 // 默认端口
