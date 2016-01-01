@@ -32,6 +32,23 @@ if (window.WebSocket) {
                 });
                 console.log('%c***********end**************\n', 'color: blue');
             }
+            // js文件，热更新
+            if (data.normaliazeFile.indexOf('.js') > -1 && data.normaliazeFile !== 'socket.js') {
+                var moduleName = data.normaliazeFile.replace(/\.js/, '');
+                var topModule = null;
+                // 1,删除该module的缓存和上层模块缓存,否则require不会去执行请求
+                window.REQUIREJS_MODULE_RELATION[moduleName].forEach(function (item) {
+                    delete window.REQUIREJS_MODULE_CONTEXTS.defined[item];
+                    delete window.REQUIREJS_MODULE_CONTEXTS.registry[item];
+                    delete window.REQUIREJS_MODULE_CONTEXTS.urlFetched['./' + item + '.js'];
+                    topModule = item;
+                });
+                
+                // 2,重新require  topModule模块
+                window.require([topModule], function () {
+                    console.log('【' + topModule + '】 module has update!');
+                });
+            }
         };
     }
     catch (err) {
