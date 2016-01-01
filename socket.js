@@ -37,7 +37,7 @@ if (window.WebSocket) {
                 var moduleName = data.normaliazeFile.replace(/\.js/, '');
                 var topModule = null;
                 // requirejs
-                if (window.FCSERVER_MODULE_TYPE === 'requirejs') {
+                if (window.FCSERVER_MODULE_TYPE.type === 'requirejs') {
                     // 1,删除该module的缓存和上层模块缓存,否则require不会去执行请求
                     window.REQUIREJS_MODULE_RELATION[moduleName].forEach(function (item) {
                         delete window.REQUIREJS_MODULE_CONTEXTS.defined[item];
@@ -52,7 +52,7 @@ if (window.WebSocket) {
                     });
                 }
                 // seajs
-                else if (window.FCSERVER_MODULE_TYPE === 'seajs') {
+                else if (window.FCSERVER_MODULE_TYPE.type === 'seajs') {
                     for (var item in window.SEAJS_MODULE_RELATION) {
                         if (item.indexOf(moduleName + '.js') > -1) {
                                 delete window.SEAJS_MODULE_RELATION[item];
