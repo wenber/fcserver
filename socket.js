@@ -36,18 +36,42 @@ if (window.WebSocket) {
             if (data.normaliazeFile.indexOf('.js') > -1 && data.normaliazeFile !== 'socket.js') {
                 var moduleName = data.normaliazeFile.replace(/\.js/, '');
                 var topModule = null;
-                // 1,删除该module的缓存和上层模块缓存,否则require不会去执行请求
-                window.REQUIREJS_MODULE_RELATION[moduleName].forEach(function (item) {
-                    delete window.REQUIREJS_MODULE_CONTEXTS.defined[item];
-                    delete window.REQUIREJS_MODULE_CONTEXTS.registry[item];
-                    delete window.REQUIREJS_MODULE_CONTEXTS.urlFetched['./' + item + '.js'];
-                    topModule = item;
-                });
-                
-                // 2,重新require  topModule模块
-                window.require([topModule], function () {
-                    console.log('【' + topModule + '】 module has update!');
-                });
+                // requirejs
+                if (window.FCSERVER_MODULE_TYPE === 'requirejs') {
+                    // 1,删除该module的缓存和上层模块缓存,否则require不会去执行请求
+                    window.REQUIREJS_MODULE_RELATION[moduleName].forEach(function (item) {
+                        delete window.REQUIREJS_MODULE_CONTEXTS.defined[item];
+                        delete window.REQUIREJS_MODULE_CONTEXTS.registry[item];
+                        delete window.REQUIREJS_MODULE_CONTEXTS.urlFetched['./' + item + '.js'];
+                        topModule = item;
+                    });
+                    
+                    // 2,重新require  topModule模块
+                    window.require([topModule], function () {
+                        console.log('【' + topModule + '】 module has update!');
+                    });
+                }
+                // seajs
+                else if (window.FCSERVER_MODULE_TYPE === 'seajs') {
+                    for (var item in window.SEAJS_MODULE_RELATION) {
+                        if (item.indexOf(moduleName + '.js') > -1) {
+                                delete window.SEAJS_MODULE_RELATION[item];
+                                delete seajs.cache[item];
+                                window.SEAJS_MODULE_CONTEXTS[item].forEach(function (module) {
+                                    if (module) {
+                                        delete window.SEAJS_MODULE_RELATION[module];
+                                        delete seajs.cache[module];
+                                        delete window.SEAJS_MODULE_CONTEXTS[module];
+                                        topModule = module;
+                                    }
+                                });
+                            break;
+                        }
+                    }
+                    seajs.use(topModule, function () {
+                        console.log('【' + topModule + '】 module has update!');
+                    });
+                }
             }
         };
     }
