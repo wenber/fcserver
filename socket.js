@@ -36,8 +36,9 @@ if (window.WebSocket) {
             if (data.normaliazeFile.indexOf('.js') > -1 && data.normaliazeFile !== 'socket.js') {
                 var moduleName = data.normaliazeFile.replace(/\.js/, '');
                 var topModule = null;
+
                 // requirejs
-                if (window.FCSERVER_MODULE_TYPE.type === 'requirejs') {
+                if (window.FCSERVER_MODULE_TYPE === 'requirejs') {
                     // 1,删除该module的缓存和上层模块缓存,否则require不会去执行请求
                     window.REQUIREJS_MODULE_RELATION[moduleName].forEach(function (item) {
                         delete window.REQUIREJS_MODULE_CONTEXTS.defined[item];
@@ -52,7 +53,7 @@ if (window.WebSocket) {
                     });
                 }
                 // seajs
-                else if (window.FCSERVER_MODULE_TYPE.type === 'seajs') {
+                else if (window.FCSERVER_MODULE_TYPE === 'seajs') {
                     for (var item in window.SEAJS_MODULE_RELATION) {
                         if (item.indexOf(moduleName + '.js') > -1) {
                                 delete window.SEAJS_MODULE_RELATION[item];
@@ -72,8 +73,41 @@ if (window.WebSocket) {
                         console.log('【' + topModule + '】 module has update!');
                     });
                 }
+                // esl
+                else if (window.FCSERVER_MODULE_TYPE === 'esljs') {
+                        // 待删除缓存，重新加载的模块数组list
+                        var deleteModules = [moduleName];
+                        getDeleteModule(moduleName);
+                    }
+
+                    /**
+                     * 获取上层模块
+                     * @param  {string} moduleName 当前模块
+                     */
+                    function getDeleteModule(moduleName) {
+                        window.ESLJS_DEPKEY_MAINVALUE[moduleName].forEach(function (item) {
+                            deleteModules.push(item);
+
+                            if (window.ESLJS_DEPKEY_MAINVALUE[item]) {
+                                getDeleteModule(item)
+                            }
+                            return;
+                        });
+                    }
+
+                    // 删除这块模块的缓存
+                    deleteModules.forEach(function (item) {
+                        delete window.ESLJS_DEPKEY_MAINVALUE[item];
+                        delete window.ESLJS_MODULE_CACHE[item];
+                        delete window.ESLJS_MODULE_LOADING[item];
+                    });
+
+                    // 从顶层开始重新加载模块
+                    window.require(globalEntryModule, function () {
+                        console.log('【' + moduleName + '】 module has update!');
+                    });
+                }
             }
-        };
     }
     catch (err) {
         console.log(err);
