@@ -22,3 +22,15 @@ exports.defaultPort = 8080;
 
 // 是否启动socket调试,当启用socket时，只能使用默认的8080端口
 exports.initSocket = false;
+
+// 服务协议
+exports.protocol = 'http';
+
+var fs = require('fs');
+
+// 如果是https，需要tlsOptions参数
+exports.tlsOptions = {
+    key:  fs.readFileSync('./server.key'),
+    cert: fs.readFileSync('./server.crt')
+};
+

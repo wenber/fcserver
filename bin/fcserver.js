@@ -12,6 +12,7 @@ var fs = require('fs');
 var path = require('path');
 var program = require('commander');
 var config = require('../lib/config');
+var serverConfig = require('../fcserver-config');
 
 
 var defaultConfig = path.resolve(__dirname, '..', config.defaultConf);
@@ -34,7 +35,7 @@ program
         var server = require('../lib/server');
         server(fixPort);
         if (program.open) {
-            require('../lib/util/util').openInBrowser('http://localhost:' + fixPort);
+            require('../lib/util/util').openInBrowser(serverConfig.protocol + '://127.0.0.1:' + fixPort);
         }
     });
 

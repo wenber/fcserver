@@ -34,6 +34,18 @@ fcserver-master  // 通过守护进程启动，跌机时会自动重启  但是�
 在项目根目录下添加fcserver-config.js配置文件，文件内容如下
 
 ```
+// 默认是服务启动目录下的mock文件夹，这里也支持自定义的mock目录
+exports.mockPath = './mock';
+
+// 默认端口
+exports.defaultPort = 8080;
+
+// 服务协议
+exports.protocol = 'http';
+
+// 如果是https，需要tlsOptions参数
+exports.tlsOptions = {};
+
 exports.path2Handler = [
     { 
         // 对less文件的请求，交由less处理器模块
