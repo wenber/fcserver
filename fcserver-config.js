@@ -29,8 +29,8 @@ exports.protocol = 'http';
 var fs = require('fs');
 
 // 如果是https，需要tlsOptions参数
-exports.tlsOptions = {
-    key:  fs.readFileSync('./server.key'),
-    cert: fs.readFileSync('./server.crt')
-};
+// exports.tlsOptions = {
+//     key:  fs.readFileSync('./server.key'),
+//     cert: fs.readFileSync('./server.crt')
+// };
 
