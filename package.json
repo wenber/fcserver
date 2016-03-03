@@ -1,6 +1,6 @@
 {
   "name": "fcserver",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "node版精简服务器",
   "main": "./bin/fcserver.js",
   "bin": {
